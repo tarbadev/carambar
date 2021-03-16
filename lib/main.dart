@@ -1,8 +1,10 @@
+import 'package:carambar/header.dart';
 import 'package:carambar/home_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -27,8 +29,6 @@ class _MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<_MainPage> {
-  final String _name = 'Jane Doe';
-  final int _age = 18;
   int _selectedTab = 0;
 
   final tabs = [
@@ -45,11 +45,7 @@ class _MainPageState extends State<_MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(children: [
-          Text(
-            '$_name, $_age',
-          ),
-        ]),
+        title: Header(),
       ),
       body: Container(
         padding: EdgeInsets.all(10),
