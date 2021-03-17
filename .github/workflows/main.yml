@@ -1,0 +1,28 @@
+name: Carambar CI
+on: push
+jobs:
+  unit-test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1.4
+        with:
+          flutter-version: '2.0.2'
+      - name: "Flutter Analyze"
+        run: flutter analyze
+      - run: flutter test
+
+  build-debug:
+    needs: unit-test
+    name: Build - Debug
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1.4
+        with:
+          flutter-version: '2.0.2'
+      - name: "Build - Android - Debug"
+        run: flutter build apk --debug
+      - name: "Build - iOS - Debug"
+        run: flutter build ios --debug --no-codesign
