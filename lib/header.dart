@@ -11,6 +11,7 @@ class Header extends ConsumerWidget {
     return Row(children: [
       Text(
         '${character.firstName} ${character.lastName}, ${character.age}',
+        key: Key('Header__Title'),
       ),
     ]);
   }

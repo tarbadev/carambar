@@ -13,10 +13,12 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   flutter_riverpod: ^0.13.1
+  equatable: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mockito: ^5.0.1
 
 flutter:
   uses-material-design: true

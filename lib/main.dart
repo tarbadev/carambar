@@ -1,5 +1,7 @@
 import 'package:carambar/header.dart';
 import 'package:carambar/home_tab.dart';
+import 'package:carambar/settings_tab.dart';
+import 'package:carambar/work_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,6 +35,8 @@ class _MainPageState extends State<_MainPage> {
 
   final tabs = [
     HomeTab(),
+    WorkTab(),
+    SettingsTab(),
   ];
 
   void _tabSelected(newTabIndex) {
@@ -59,12 +63,8 @@ class _MainPageState extends State<_MainPage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Character',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.work),
-            label: 'Jobs',
+            label: 'Work',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

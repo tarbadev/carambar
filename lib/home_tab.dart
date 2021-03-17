@@ -10,13 +10,13 @@ class HomeTab extends ConsumerWidget {
     return Scaffold(
       body: Text('Loading...'),
       bottomNavigationBar: MaterialButton(
-        key: Key('Home__AgeButton'),
+        key: Key('Home__Plus1YearButton'),
         color: Colors.lightBlue,
         child: Text(
           '+1 year',
           style: TextStyle(color: Colors.white),
         ),
-        onPressed: () => context.read(characterProvider).age(),
+        onPressed: context.read(characterProvider).age,
       ),
     );
   }
