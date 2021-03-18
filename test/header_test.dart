@@ -1,16 +1,13 @@
 import 'package:carambar/header.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:test_helpers/header_tester.dart';
+
+import 'testable_widget.dart';
 
 void main() {
   group('Header', () {
     testWidgets('Displays the character name and age', (WidgetTester tester) async {
-      await tester.pumpWidget(ProviderScope(
-        child: MaterialApp(home: Header()),
-      ));
+      await tester.pumpWidget(buildTestableWidget(Header()));
 
       final headerHelper = HeaderTester(tester);
 
