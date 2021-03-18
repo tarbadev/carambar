@@ -37,8 +37,20 @@ jobs:
       - name: "Build - iOS - Debug"
         run: flutter build ios --debug --no-codesign
 
-  integration-test-android-debug:
-    name: Integration Tests - Android - Debug
+  build-web:
+    needs: unit-test
+    name: Build - Web
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1.4.0
+        with:
+          flutter-version: '2.0.2'
+      - name: "Build - Web"
+        run: flutter build web
+
+  integration-test-android:
+    name: Integration Tests - Android
     needs: build-android-debug
     runs-on: macos-latest
     steps:
@@ -54,8 +66,8 @@ jobs:
           arch: x86_64
           script: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/home_test.dart
 
-  integration-test-ios-debug:
-    name: Integration Tests - iOS - Debug
+  integration-test-ios:
+    name: Integration Tests - iOS
     needs: build-ios-debug
     runs-on: macos-latest
     steps:
@@ -69,3 +81,19 @@ jobs:
         run: xcrun simctl boot "51286E9E-FA29-4E7A-9CF6-5948C2ED7D2B"
       - name: "Run Flutter Driver tests on iOS"
         run: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/home_test.dart
+
+  integration-test-web:
+    name: Integration Tests - Web
+    needs: build-web
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1.4.0
+        with:
+          flutter-version: '2.0.2'
+      - name: "Install chromedriver"
+        uses: nanasess/setup-chromedriver@master
+      - name: "Start chromedriver"
+        run: chromedriver --port=4444 &
+      - name: "Run Flutter Driver tests on Web"
+        run: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/home_test.dart -d web-server

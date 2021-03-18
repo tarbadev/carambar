@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import 'helper/home_tab_tester.dart';
+import 'package:test_helpers/home_tab_tester.dart';
 
 class _MockCharacterNotifier extends Mock implements CharacterNotifier {}
 

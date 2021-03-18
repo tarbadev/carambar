@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import 'helper/settings_tab_tester.dart';
+import 'package:test_helpers/settings_tab_tester.dart';
 
 class _MockCharacterNotifier extends Mock implements CharacterNotifier {}
 class _MockBottomNavigationItemNotifier extends Mock implements BottomNavigationItemNotifier {}

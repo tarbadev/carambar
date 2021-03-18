@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'helper/header_tester.dart';
+import 'package:test_helpers/header_tester.dart';
 
 void main() {
   group('Header', () {
