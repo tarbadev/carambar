@@ -1,3 +1,4 @@
+import 'package:carambar/bottom_navigation_item_provider.dart';
 import 'package:carambar/character_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,6 +28,7 @@ class SettingsTab extends ConsumerWidget {
                     child: Text('I\'m done with it!'),
                     onPressed: () {
                       context.read(characterProvider).reset();
+                      context.read(bottomNavigationItemProvider).selectTab(0);
                       Navigator.of(context).pop();
                     },
                   ),

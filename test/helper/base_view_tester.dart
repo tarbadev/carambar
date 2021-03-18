@@ -27,6 +27,12 @@ class BaseViewTester {
     await tester.tap(find.byKey(Key(key)));
   }
 
+  Future<void> tapOnElementByText(String text) async {
+    await tester.tap(find.byWidgetPredicate(
+      (Widget widget) => widget is Text && widget.data == text,
+    ));
+  }
+
   Future<void> tapOnButtonByWidgetAndText(Type widget, String text) async {
     await tester.tap(find.widgetWithText(widget, text));
   }

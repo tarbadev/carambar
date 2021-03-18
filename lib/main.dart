@@ -5,6 +5,8 @@ import 'package:carambar/work_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'bottom_navigation_item_provider.dart';
+
 void main() {
   runApp(ProviderScope(child: MyApp()));
 }
@@ -23,15 +25,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class _MainPage extends StatefulWidget {
+class _MainPage extends ConsumerWidget {
   _MainPage({Key key}) : super(key: key);
-
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<_MainPage> {
-  int _selectedTab = 0;
 
   final tabs = [
     HomeTab(),
@@ -39,21 +34,17 @@ class _MainPageState extends State<_MainPage> {
     SettingsTab(),
   ];
 
-  void _tabSelected(newTabIndex) {
-    setState(() {
-      _selectedTab = newTabIndex;
-    });
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, watch) {
+    final selectedTab = watch(bottomNavigationItemProvider.state);
+
     return Scaffold(
       appBar: AppBar(
         title: Header(),
       ),
       body: Container(
         padding: EdgeInsets.all(10),
-        child: tabs[_selectedTab],
+        child: tabs[selectedTab],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -71,9 +62,9 @@ class _MainPageState extends State<_MainPage> {
             label: 'Settings',
           ),
         ],
-        currentIndex: _selectedTab,
+        currentIndex: selectedTab,
         fixedColor: Colors.lightBlue,
-        onTap: _tabSelected,
+        onTap: context.read(bottomNavigationItemProvider).selectTab,
       ),
     );
   }

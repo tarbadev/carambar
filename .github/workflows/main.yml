@@ -6,23 +6,66 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1.4
+      - uses: subosito/flutter-action@v1.4.0
         with:
           flutter-version: '2.0.2'
       - name: "Flutter Analyze"
         run: flutter analyze
       - run: flutter test
 
-  build-debug:
+  build-android-debug:
     needs: unit-test
-    name: Build - Debug
+    name: Build - Android - Debug
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1.4
+      - uses: subosito/flutter-action@v1.4.0
         with:
           flutter-version: '2.0.2'
       - name: "Build - Android - Debug"
         run: flutter build apk --debug
+
+  build-ios-debug:
+    needs: unit-test
+    name: Build - iOS - Debug
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1.4.0
+        with:
+          flutter-version: '2.0.2'
       - name: "Build - iOS - Debug"
         run: flutter build ios --debug --no-codesign
+
+  integration-test-android-debug:
+    name: Integration Tests - Android - Debug
+    needs: build-android-debug
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1.4.0
+        with:
+          flutter-version: '2.0.2'
+      - name: "Run Flutter Driver tests on Android"
+        uses: reactivecircus/android-emulator-runner@v2.15.0
+        with:
+          api-level: 29
+          target: google_apis
+          arch: x86_64
+          script: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/home_test.dart
+
+  integration-test-ios-debug:
+    name: Integration Tests - iOS - Debug
+    needs: build-ios-debug
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1.4.0
+        with:
+          flutter-version: '2.0.2'
+      - name: "List all simulators"
+        run: "xcrun instruments -s"
+      - name: "Start Simulator iPhone 12 Pro Max (14.4)"
+        run: xcrun simctl boot "51286E9E-FA29-4E7A-9CF6-5948C2ED7D2B"
+      - name: "Run Flutter Driver tests on iOS"
+        run: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/home_test.dart

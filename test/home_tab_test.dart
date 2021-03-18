@@ -5,17 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import 'helper/base_view_tester.dart';
+import 'helper/home_tab_tester.dart';
 
 class _MockCharacterNotifier extends Mock implements CharacterNotifier {}
-
-class _HomeTabHelper extends BaseViewTester {
-  _HomeTabHelper(tester): super(tester);
-
-  Future<void> tapOnPlus1Year() async {
-    await tapOnButtonByKey('Home__Plus1YearButton');
-  }
-}
 
 void main() {
   group('HomeTab', () {
@@ -28,7 +20,7 @@ void main() {
         child: MaterialApp(home: HomeTab()),
       ));
 
-      await _HomeTabHelper(tester).tapOnPlus1Year();
+      await HomeTabTester(tester).tapOnPlus1Year();
 
       verify(mockCharacterNotifier.age());
     });
