@@ -7,22 +7,21 @@ import 'package:mockito/mockito.dart';
 
 import 'package:test_helpers/home_tab_tester.dart';
 
-class _MockCharacterNotifier extends Mock implements CharacterNotifier {}
+import 'mock_definitions.dart';
 
 void main() {
   group('HomeTab', () {
     testWidgets('Calls character age method', (WidgetTester tester) async {
-      var mockCharacterNotifier = _MockCharacterNotifier();
       await tester.pumpWidget(ProviderScope(
         overrides: [
-          characterProvider.overrideWithValue(mockCharacterNotifier)
+          characterProvider.overrideWithValue(Mocks.mockCharacterNotifier)
         ],
         child: MaterialApp(home: HomeTab()),
       ));
 
       await HomeTabTester(tester).tapOnPlus1Year();
 
-      verify(mockCharacterNotifier.age());
+      verify(Mocks.mockCharacterNotifier.age());
     });
   });
 }
