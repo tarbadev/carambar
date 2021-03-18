@@ -8,10 +8,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'bottom_navigation_item_provider.dart';
 
 void main() {
-  runApp(ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child: CarambarApp()));
 }
 
-class MyApp extends StatelessWidget {
+class CarambarApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
