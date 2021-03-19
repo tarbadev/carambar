@@ -64,7 +64,7 @@ jobs:
           api-level: 29
           target: google_apis
           arch: x86_64
-          script: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/home_test.dart
+          script: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main_test.dart
 
   integration-test-ios:
     name: Integration Tests - iOS
@@ -80,7 +80,7 @@ jobs:
       - name: "Start Simulator iPhone 12 Pro Max (14.4)"
         run: xcrun simctl boot "51286E9E-FA29-4E7A-9CF6-5948C2ED7D2B"
       - name: "Run Flutter Driver tests on iOS"
-        run: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/home_test.dart
+        run: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main_test.dart
 
   integration-test-web:
     name: Integration Tests - Web
@@ -96,4 +96,4 @@ jobs:
       - name: "Start chromedriver"
         run: chromedriver --port=4444 &
       - name: "Run Flutter Driver tests on Web"
-        run: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/home_test.dart -d web-server
+        run: flutter drive --driver=test_driver/integration_test.dart --target=integration_test/main_test.dart -d web-server
