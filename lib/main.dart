@@ -1,3 +1,4 @@
+import 'package:carambar/character_tab.dart';
 import 'package:carambar/header.dart';
 import 'package:carambar/home_tab.dart';
 import 'package:carambar/settings_tab.dart';
@@ -30,6 +31,7 @@ class _MainPage extends ConsumerWidget {
 
   final tabs = [
     HomeTab(),
+    CharacterTab(),
     WorkTab(),
     SettingsTab(),
   ];
@@ -52,6 +54,10 @@ class _MainPage extends ConsumerWidget {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Character',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.work),

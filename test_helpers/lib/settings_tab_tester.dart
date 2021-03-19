@@ -14,7 +14,7 @@ class SettingsTabTester extends BaseViewTester {
   }
 
   Future<void> goTo() async {
-    await tapOnElementByText('Settings');
+    await tapOnTextWidgetByTextContent('Settings');
     await tester.pump();
   }
 }

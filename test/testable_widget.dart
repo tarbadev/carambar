@@ -7,6 +7,6 @@ Widget buildTestableWidget(
 }) {
   return ProviderScope(
     overrides: providerOverrides,
-    child: MaterialApp(home: widget),
+    child: MaterialApp(home: Scaffold(body: widget)),
   );
 }

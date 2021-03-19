@@ -1,3 +1,5 @@
+import 'package:carambar/Work.dart';
+
 import 'character.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,5 +16,9 @@ class CharacterNotifier extends StateNotifier<Character> {
 
   void reset() {
     state = _initialCharacter;
+  }
+
+  void setJob(CareerJob careerJob) {
+    state = state.setCurrentJob(careerJob);
   }
 }

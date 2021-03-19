@@ -27,13 +27,18 @@ class BaseViewTester {
     await tester.tap(find.byKey(Key(key)));
   }
 
-  Future<void> tapOnElementByText(String text) async {
-    await tester.tap(find.byWidgetPredicate(
-      (Widget widget) => widget is Text && widget.data == text,
-    ));
+  Future<void> tapOnTextWidgetByTextContent(String textContent) async {
+    await tester.tap(_findByTextContent(textContent));
   }
+
+  Finder _findByTextContent(String textContent) =>
+      find.byWidgetPredicate((Widget widget) => widget is Text && widget.data == textContent);
 
   Future<void> tapOnButtonByWidgetAndText(Type widget, String text) async {
     await tester.tap(find.widgetWithText(widget, text));
+  }
+
+  T getWidgetByKey<T extends Widget>(String key) {
+    return tester.widget<T>(find.byKey(Key(key)));
   }
 }
