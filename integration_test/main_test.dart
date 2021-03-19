@@ -1,13 +1,12 @@
-import 'package:carambar/Work.dart';
 import 'package:carambar/career_utils.dart';
+import 'package:carambar/domain/work.dart';
 import 'package:carambar/main.dart' as app;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-
-import 'package:test_helpers/home_tab_tester.dart';
 import 'package:test_helpers/character_tab_tester.dart';
-import 'package:test_helpers/work_tab_tester.dart';
+import 'package:test_helpers/home_tab_tester.dart';
 import 'package:test_helpers/settings_tab_tester.dart';
+import 'package:test_helpers/work_tab_tester.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +19,19 @@ void main() {
 
     expect(homeTabTester.isVisible, true);
     expect(homeTabTester.header.title, 'Jane Doe, 18');
+
+    final lifeEvent = homeTabTester.lifeEvent(18);
+    expect(lifeEvent.isVisible, true);
+    expect(lifeEvent.title, 'Age 18');
+    expect(lifeEvent.events, [
+      '''
+      Your life just started!
+      Your name is Jane Doe
+      '''
+          .split('\n')
+          .map((line) => line.trim())
+          .reduce((line1, line2) => line2.isNotEmpty ? '$line1\n$line2' : line1)
+    ]);
 
     await homeTabTester.tapOnPlus1Year();
     await homeTabTester.tapOnPlus1Year();
@@ -58,6 +70,7 @@ void main() {
 
     final characterTabTester = CharacterTabTester(tester);
     final workTabTester = WorkTabTester(tester);
+    final homeTabTester = HomeTabTester(tester);
 
     await characterTabTester.goTo();
     expect(characterTabTester.isVisible, true);
@@ -71,6 +84,12 @@ void main() {
     await characterTabTester.goTo();
     expect(characterTabTester.isVisible, true);
     expect(characterTabTester.currentCareer, 'Dishwasher');
+
+    await homeTabTester.goTo();
+    final lifeEvent = homeTabTester.lifeEvent(18);
+    expect(lifeEvent.isVisible, true);
+    expect(lifeEvent.title, 'Age 18');
+    expect(lifeEvent.events.last, 'You just started a new job as Dishwasher');
   });
 
   testWidgets("Is kicked out of the house at 25", (WidgetTester tester) async {
@@ -98,5 +117,13 @@ void main() {
     await characterTabTester.goTo();
     expect(characterTabTester.isVisible, true);
     expect(characterTabTester.currentHousing, 'Homeless');
+
+    await homeTabTester.goTo();
+    final lifeEvent = homeTabTester.lifeEvent(25);
+    expect(lifeEvent.isVisible, true);
+    expect(lifeEvent.title, 'Age 25');
+    expect(lifeEvent.events, [
+      'You got kicked out of the house by your parents! You\'re now homeless',
+    ]);
   });
 }

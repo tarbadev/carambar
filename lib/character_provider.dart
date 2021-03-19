@@ -1,30 +1,55 @@
-import 'package:carambar/Work.dart';
+import 'package:carambar/character_life_provider.dart';
+import 'package:carambar/domain/age_event.dart';
+import 'package:carambar/domain/life_event.dart';
+import 'package:carambar/domain/work.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'character.dart';
+import 'domain/character.dart';
 
-final characterProvider = StateNotifierProvider((_) => CharacterNotifier());
-
-final _initialCharacter = Character(
-  'Jane',
-  'Doe',
-  18,
-  null,
-  Housing.LivingWithParents,
-);
+final characterProvider = StateNotifierProvider((ref) => CharacterNotifier(ref));
 
 class CharacterNotifier extends StateNotifier<Character> {
-  CharacterNotifier() : super(_initialCharacter);
+  final ProviderReference ref;
+
+  CharacterNotifier(this.ref) : super(null);
 
   void age() {
     state = state.incrementAge();
-  }
 
-  void reset() {
-    state = _initialCharacter;
+    List<LifeEvent> lifeEvents = [];
+    if (state.age == 25 && state.currentHousing == Housing.Homeless) {
+      lifeEvents.add(KickedOutFromParents());
+    }
+
+    this.ref.read(characterLifeProvider).addAgeEvent(state.age, lifeEvents: lifeEvents);
   }
 
   void setJob(CareerJob careerJob) {
     state = state.setCurrentJob(careerJob);
+    this.ref.read(characterLifeProvider).addAgeEvent(state.age, lifeEvents: [NewJob(careerJob)]);
+  }
+
+  void setCharacterFromAgeEvents(List<AgeEvent> ageEvents) {
+    final lifeEvents = ageEvents.map((e) => e.lifeEvents).expand((e) => e).toList();
+    lifeEvents.forEach((lifeEvent) {
+      switch (lifeEvent.runtimeType) {
+        case InitiateEvent:
+          state = Character.fromInitiateEvent(lifeEvent);
+          break;
+        default:
+          throw LifeEventTypeNotKnownException(lifeEvent.runtimeType);
+      }
+    });
+  }
+}
+
+class LifeEventTypeNotKnownException implements Exception {
+  final unknownType;
+
+  LifeEventTypeNotKnownException(this.unknownType);
+
+  String toString() {
+    if (unknownType == null) return "LifeEventTypeNotKnownException";
+    return "LifeEventTypeNotKnownException: Unknown type ($unknownType)";
   }
 }

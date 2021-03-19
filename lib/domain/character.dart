@@ -1,6 +1,7 @@
+import 'package:carambar/domain/life_event.dart';
 import 'package:equatable/equatable.dart';
 
-import 'Work.dart';
+import 'work.dart';
 
 enum Housing {
   LivingWithParents,
@@ -44,4 +45,14 @@ class Character extends Equatable {
 
   @override
   List<Object> get props => [firstName, lastName, age, currentJob, currentHousing];
+
+  factory Character.fromInitiateEvent(InitiateEvent initiateEvent) {
+    return Character(
+      initiateEvent.firstName,
+      initiateEvent.lastName,
+      18,
+      null,
+      Housing.LivingWithParents,
+    );
+  }
 }

@@ -1,4 +1,4 @@
-import 'package:carambar/character.dart';
+import 'package:carambar/domain/character.dart';
 import 'package:carambar/character_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

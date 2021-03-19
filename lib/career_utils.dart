@@ -1,4 +1,4 @@
-import 'Work.dart';
+import 'domain/work.dart';
 
 const Map<CareerJob, String> careerJobToString = {
   CareerJob.Dishwasher: 'Dishwasher',

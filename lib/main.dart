@@ -6,6 +6,7 @@ import 'package:carambar/work_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'character_life_provider.dart';
 import 'bottom_navigation_item_provider.dart';
 
 void main() {
@@ -38,6 +39,12 @@ class _MainPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, watch) {
+    final ageEvents = watch(characterLifeProvider.state).ageEvents;
+
+    if (ageEvents.length == 0) {
+      return _loadingEvents();
+    }
+
     final selectedTab = watch(bottomNavigationItemProvider.state);
 
     return Scaffold(
@@ -45,7 +52,6 @@ class _MainPage extends ConsumerWidget {
         title: Header(),
       ),
       body: Container(
-        padding: EdgeInsets.all(10),
         child: tabs[selectedTab],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -71,6 +77,21 @@ class _MainPage extends ConsumerWidget {
         currentIndex: selectedTab,
         fixedColor: Colors.lightBlue,
         onTap: context.read(bottomNavigationItemProvider).selectTab,
+      ),
+    );
+  }
+
+  Center _loadingEvents() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(),
+          Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: Text('Loading...'),
+          ),
+        ],
       ),
     );
   }

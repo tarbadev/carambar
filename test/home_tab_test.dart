@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test_helpers/home_tab_tester.dart';
 
-import 'mock_definitions.dart';
-import 'testable_widget.dart';
+import 'utils/mock_definitions.dart';
+import 'utils/testable_widget.dart';
 
 void main() {
   group('HomeTab', () {

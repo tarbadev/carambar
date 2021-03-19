@@ -1,32 +1,28 @@
-import 'package:carambar/Work.dart';
+import 'package:carambar/character_life_provider.dart';
 import 'package:carambar/character_provider.dart';
+import 'package:carambar/domain/life_event.dart';
+import 'package:carambar/domain/work.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 
-import 'test_factory.dart';
+import 'utils/mock_definitions.dart';
+import 'utils/test_factory.dart';
 
 void main() {
   group('CharacterNotifier', () {
+    setUpAll(() {
+      when(Mocks.mockProviderReference.read(characterLifeProvider))
+          .thenReturn(Mocks.mockCharacterLifeNotifier);
+    });
+
     test('Age should be incremented', () {
-      var characterNotifier = CharacterNotifier();
-      expect(characterNotifier.state.age, 18); // ignore: invalid_use_of_protected_member
+      var character = TestFactory.character(firstName: 'John', lastName: 'McLane', age: 25);
+      var characterNotifier = CharacterNotifier(Mocks.mockProviderReference);
+      characterNotifier.state = character; // ignore: invalid_use_of_protected_member
 
       characterNotifier.age();
 
-      expect(characterNotifier.state.age, 19); // ignore: invalid_use_of_protected_member
-    });
-
-    test('Reset should reset the initial character', () {
-      var character = TestFactory.character(firstName: 'John', lastName: 'McLane', age: 25);
-      var characterNotifier = CharacterNotifier();
-      characterNotifier.state = character; // ignore: invalid_use_of_protected_member
-
-      expect(characterNotifier.state, character); // ignore: invalid_use_of_protected_member
-
-      characterNotifier.reset();
-
-      // ignore: invalid_use_of_protected_member
-      expect(characterNotifier.state,
-          TestFactory.character(firstName: 'Jane', lastName: 'Doe', age: 18));
+      expect(characterNotifier.state.age, 26); // ignore: invalid_use_of_protected_member
     });
 
     test('SetJob should set the current job', () {
@@ -37,7 +33,7 @@ void main() {
         currentJob: null,
       );
       var expectedCharacter = character.copy(currentJob: CareerJob.Dishwasher);
-      var characterNotifier = CharacterNotifier();
+      var characterNotifier = CharacterNotifier(Mocks.mockProviderReference);
       characterNotifier.state = character; // ignore: invalid_use_of_protected_member
 
       expect(characterNotifier.state, character); // ignore: invalid_use_of_protected_member
@@ -46,6 +42,37 @@ void main() {
 
       // ignore: invalid_use_of_protected_member
       expect(characterNotifier.state, expectedCharacter);
+    });
+
+    test('Should add an age event on age call', () {
+      final character = TestFactory.character(age: 25);
+      final characterNotifier = CharacterNotifier(Mocks.mockProviderReference);
+      characterNotifier.state = character; // ignore: invalid_use_of_protected_member
+
+      characterNotifier.age();
+
+      verify(Mocks.mockCharacterLifeNotifier.addAgeEvent(26));
+    });
+
+    test('Should add an age event on age call when turning 25 and being kicked out by parents', () {
+      final character = TestFactory.character(age: 24);
+      final characterNotifier = CharacterNotifier(Mocks.mockProviderReference);
+      characterNotifier.state = character; // ignore: invalid_use_of_protected_member
+
+      characterNotifier.age();
+
+      verify(Mocks.mockCharacterLifeNotifier.addAgeEvent(25, lifeEvents: [KickedOutFromParents()]));
+    });
+
+    test('Should add an age event on setJob', () {
+      var character = TestFactory.character(currentJob: null);
+      var characterNotifier = CharacterNotifier(Mocks.mockProviderReference);
+      characterNotifier.state = character; // ignore: invalid_use_of_protected_member
+
+      characterNotifier.setJob(CareerJob.Dishwasher);
+
+      verify(Mocks.mockCharacterLifeNotifier
+          .addAgeEvent(character.age, lifeEvents: [NewJob(CareerJob.Dishwasher)]));
     });
   });
 }

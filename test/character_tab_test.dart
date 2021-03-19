@@ -1,13 +1,13 @@
-import 'package:carambar/Work.dart';
-import 'package:carambar/character.dart';
+import 'package:carambar/domain/work.dart';
+import 'package:carambar/domain/character.dart';
 import 'package:carambar/character_provider.dart';
 import 'package:carambar/character_tab.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:test_helpers/character_tab_tester.dart';
 
-import 'fake_definitions.dart';
-import 'test_factory.dart';
-import 'testable_widget.dart';
+import 'utils/fake_definitions.dart';
+import 'utils/test_factory.dart';
+import 'utils/testable_widget.dart';
 
 void main() {
   group('CharacterTab', () {

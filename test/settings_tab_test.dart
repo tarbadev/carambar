@@ -1,12 +1,12 @@
 import 'package:carambar/bottom_navigation_item_provider.dart';
-import 'package:carambar/character_provider.dart';
+import 'package:carambar/character_life_provider.dart';
 import 'package:carambar/settings_tab.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test_helpers/settings_tab_tester.dart';
 
-import 'mock_definitions.dart';
-import 'testable_widget.dart';
+import 'utils/mock_definitions.dart';
+import 'utils/testable_widget.dart';
 
 void main() {
   group('SettingsTab', () {
@@ -14,7 +14,7 @@ void main() {
       await tester.pumpWidget(buildTestableWidget(
         SettingsTab(),
         providerOverrides: [
-          characterProvider.overrideWithValue(Mocks.mockCharacterNotifier),
+          characterLifeProvider.overrideWithValue(Mocks.mockCharacterLifeNotifier),
           bottomNavigationItemProvider.overrideWithValue(Mocks.mockBottomNavigationItemNotifier)
         ],
       ));
@@ -27,7 +27,7 @@ void main() {
       await settingsTabHelper.endLifeDialog.confirmEndLife();
 
       expect(settingsTabHelper.endLifeDialog.isVisible, false);
-      verify(Mocks.mockCharacterNotifier.reset());
+      verify(Mocks.mockCharacterLifeNotifier.reset());
       verify(Mocks.mockBottomNavigationItemNotifier.selectTab(0));
     });
   });

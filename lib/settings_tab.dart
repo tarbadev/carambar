@@ -1,7 +1,8 @@
 import 'package:carambar/bottom_navigation_item_provider.dart';
-import 'package:carambar/character_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'character_life_provider.dart';
 
 class SettingsTab extends ConsumerWidget {
   SettingsTab({Key key}) : super(key: key);
@@ -27,7 +28,7 @@ class SettingsTab extends ConsumerWidget {
                     key: Key('EndLifeDialog__ConfirmButton'),
                     child: Text('I\'m done with it!'),
                     onPressed: () {
-                      context.read(characterProvider).reset();
+                      context.read(characterLifeProvider).reset();
                       context.read(bottomNavigationItemProvider).selectTab(0);
                       Navigator.of(context).pop();
                     },

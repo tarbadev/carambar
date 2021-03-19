@@ -1,4 +1,4 @@
-import 'package:carambar/Work.dart';
+import 'package:carambar/domain/work.dart';
 import 'package:carambar/career_utils.dart';
 import 'package:carambar/character_provider.dart';
 import 'package:flutter/material.dart';

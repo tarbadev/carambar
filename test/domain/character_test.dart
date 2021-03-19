@@ -1,7 +1,7 @@
-import 'package:carambar/character.dart';
+import 'package:carambar/domain/character.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'test_factory.dart';
+import '../utils/test_factory.dart';
 
 void main() {
   group('Character', () {
