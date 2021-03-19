@@ -13,4 +13,9 @@ class HomeTabTester extends BaseViewTester {
     await tapOnButtonByKey(_plus1YearButtonKey);
     await tester.pump();
   }
+
+  Future<void> goTo() async {
+    await tapOnTextWidgetByTextContent('Home');
+    await tester.pump();
+  }
 }

@@ -6,12 +6,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:test_helpers/character_tab_tester.dart';
 
 import 'fake_definitions.dart';
+import 'test_factory.dart';
 import 'testable_widget.dart';
 
 void main() {
   group('CharacterTab', () {
     testWidgets('Displays Unemployed if there is no current job', (WidgetTester tester) async {
-      final character = Character(currentJob: null);
+      final character = TestFactory.character(currentJob: null);
 
       await tester.pumpWidget(buildTestableWidget(
         CharacterTab(),
@@ -23,7 +24,7 @@ void main() {
     });
 
     testWidgets('Displays the current job', (WidgetTester tester) async {
-      final character = Character(currentJob: CareerJob.Dishwasher);
+      final character = TestFactory.character(currentJob: CareerJob.Dishwasher);
 
       await tester.pumpWidget(buildTestableWidget(
         CharacterTab(),
@@ -32,6 +33,18 @@ void main() {
 
       var characterTabTester = CharacterTabTester(tester);
       expect(characterTabTester.currentCareer, 'Dishwasher');
+    });
+
+    testWidgets('Displays the current housing', (WidgetTester tester) async {
+      final character = TestFactory.character(currentHousing: Housing.LivingWithParents);
+
+      await tester.pumpWidget(buildTestableWidget(
+        CharacterTab(),
+        providerOverrides: [characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))],
+      ));
+
+      var characterTabTester = CharacterTabTester(tester);
+      expect(characterTabTester.currentHousing, 'Living with parents');
     });
   });
 }

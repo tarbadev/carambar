@@ -7,6 +7,7 @@ class CharacterTabTester extends BaseViewTester {
 
   bool get isVisible => widgetExists(_containerKey);
   String get currentCareer => getTextByKey('Character__CurrentCareer');
+  String get currentHousing => getTextByKey('Character__CurrentHousing');
 
   Future<void> goTo() async {
     await tapOnTextWidgetByTextContent('Character');

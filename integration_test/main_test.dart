@@ -72,4 +72,31 @@ void main() {
     expect(characterTabTester.isVisible, true);
     expect(characterTabTester.currentCareer, 'Dishwasher');
   });
+
+  testWidgets("Is kicked out of the house at 25", (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    final characterTabTester = CharacterTabTester(tester);
+    final homeTabTester = HomeTabTester(tester);
+
+    await characterTabTester.goTo();
+    expect(characterTabTester.isVisible, true);
+    expect(characterTabTester.currentHousing, 'Living with parents');
+
+    await homeTabTester.goTo();
+    await homeTabTester.tapOnPlus1Year();
+    await homeTabTester.tapOnPlus1Year();
+    await homeTabTester.tapOnPlus1Year();
+    await homeTabTester.tapOnPlus1Year();
+    await homeTabTester.tapOnPlus1Year();
+    await homeTabTester.tapOnPlus1Year();
+    await homeTabTester.tapOnPlus1Year();
+
+    expect(homeTabTester.header.title, 'Jane Doe, 25');
+
+    await characterTabTester.goTo();
+    expect(characterTabTester.isVisible, true);
+    expect(characterTabTester.currentHousing, 'Homeless');
+  });
 }

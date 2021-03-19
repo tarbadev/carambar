@@ -1,6 +1,5 @@
 import 'package:carambar/Work.dart';
 import 'package:carambar/career_utils.dart';
-import 'package:carambar/character.dart';
 import 'package:carambar/character_provider.dart';
 import 'package:carambar/work_tab.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,6 +8,7 @@ import 'package:test_helpers/work_tab_tester.dart';
 
 import 'fake_definitions.dart';
 import 'mock_definitions.dart';
+import 'test_factory.dart';
 import 'testable_widget.dart';
 
 void main() {
@@ -28,11 +28,13 @@ void main() {
     });
 
     testWidgets('Current Job is disabled', (WidgetTester tester) async {
-      final character = Character(currentJob: CareerJob.Dishwasher);
+      final character = TestFactory.character(currentJob: CareerJob.Dishwasher);
 
       await tester.pumpWidget(buildTestableWidget(
         WorkTab(),
-        providerOverrides: [characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))],
+        providerOverrides: [
+          characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))
+        ],
       ));
 
       var workTabTester = WorkTabTester(tester);

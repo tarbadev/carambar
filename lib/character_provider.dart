@@ -1,14 +1,20 @@
 import 'package:carambar/Work.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'character.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final characterProvider = StateNotifierProvider((_) => CharacterNotifier());
 
-final _initialCharacter = Character(firstName: 'Jane', lastName: 'Doe', age: 18);
+final _initialCharacter = Character(
+  'Jane',
+  'Doe',
+  18,
+  null,
+  Housing.LivingWithParents,
+);
 
 class CharacterNotifier extends StateNotifier<Character> {
-  CharacterNotifier(): super(_initialCharacter);
+  CharacterNotifier() : super(_initialCharacter);
 
   void age() {
     state = state.incrementAge();
