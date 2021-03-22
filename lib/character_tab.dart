@@ -17,7 +17,7 @@ class CharacterTab extends ConsumerWidget {
       children: [
         _LabelAndValue(
           'Current Job',
-          careerJobToString[character.currentJob] ?? 'Unemployed',
+          careerJobToString(character.currentJob) ?? 'Unemployed',
           valueKey: Key('Character__CurrentCareer'),
         ),
         _LabelAndValue(

@@ -16,16 +16,16 @@ class WorkTab extends ConsumerWidget {
       child: ListView.separated(
         separatorBuilder: (context, index) => Divider(color: Colors.grey, height: 2),
         key: Key('Work__AvailableJobs'),
-        itemCount: CareerJob.values.length,
+        itemCount: allJobs.length,
         itemBuilder: (BuildContext context, int index) {
-          final careerJob = CareerJob.values[index];
-          final careerJobString = careerJobToString[careerJob];
+          final job = allJobs[index];
+          final jobName = careerJobToString(allJobs[index]);
 
           return ListTile(
-            key: Key('Work__Job__$careerJobString'),
-            title: Text(careerJobString),
-            onTap: () => context.read(characterProvider).setJob(careerJob),
-            enabled: currentJob != careerJob,
+            key: Key('Work__Job__$jobName'),
+            title: Text(jobName),
+            onTap: () => context.read(characterProvider).setJob(job),
+            enabled: currentJob != job,
           );
         },
       ),

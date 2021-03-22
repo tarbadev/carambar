@@ -1,7 +1,7 @@
 import 'package:carambar/character_life_provider.dart';
 import 'package:carambar/character_provider.dart';
 import 'package:carambar/domain/life_event.dart';
-import 'package:carambar/domain/work.dart';
+import 'package:carambar/domain/work/job.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -32,13 +32,13 @@ void main() {
         age: 25,
         currentJob: null,
       );
-      var expectedCharacter = character.copy(currentJob: CareerJob.Dishwasher);
+      var expectedCharacter = character.copy(currentJob: Dishwasher());
       var characterNotifier = CharacterNotifier(Mocks.mockProviderReference);
       characterNotifier.state = character; // ignore: invalid_use_of_protected_member
 
       expect(characterNotifier.state, character); // ignore: invalid_use_of_protected_member
 
-      characterNotifier.setJob(CareerJob.Dishwasher);
+      characterNotifier.setJob(Dishwasher());
 
       // ignore: invalid_use_of_protected_member
       expect(characterNotifier.state, expectedCharacter);
@@ -69,10 +69,10 @@ void main() {
       var characterNotifier = CharacterNotifier(Mocks.mockProviderReference);
       characterNotifier.state = character; // ignore: invalid_use_of_protected_member
 
-      characterNotifier.setJob(CareerJob.Dishwasher);
+      characterNotifier.setJob(Dishwasher());
 
       verify(Mocks.mockCharacterLifeNotifier
-          .addAgeEvent(character.age, lifeEvents: [NewJob(CareerJob.Dishwasher)]));
+          .addAgeEvent(character.age, lifeEvents: [NewJob(Dishwasher())]));
     });
   });
 }

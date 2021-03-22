@@ -1,7 +1,7 @@
-import 'package:carambar/domain/work.dart';
-import 'package:carambar/domain/character.dart';
 import 'package:carambar/character_provider.dart';
 import 'package:carambar/character_tab.dart';
+import 'package:carambar/domain/character.dart';
+import 'package:carambar/domain/work/job.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:test_helpers/character_tab_tester.dart';
 
@@ -16,7 +16,9 @@ void main() {
 
       await tester.pumpWidget(buildTestableWidget(
         CharacterTab(),
-        providerOverrides: [characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))],
+        providerOverrides: [
+          characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))
+        ],
       ));
 
       var characterTabTester = CharacterTabTester(tester);
@@ -24,11 +26,13 @@ void main() {
     });
 
     testWidgets('Displays the current job', (WidgetTester tester) async {
-      final character = TestFactory.character(currentJob: CareerJob.Dishwasher);
+      final character = TestFactory.character(currentJob: Dishwasher());
 
       await tester.pumpWidget(buildTestableWidget(
         CharacterTab(),
-        providerOverrides: [characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))],
+        providerOverrides: [
+          characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))
+        ],
       ));
 
       var characterTabTester = CharacterTabTester(tester);
@@ -40,7 +44,9 @@ void main() {
 
       await tester.pumpWidget(buildTestableWidget(
         CharacterTab(),
-        providerOverrides: [characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))],
+        providerOverrides: [
+          characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))
+        ],
       ));
 
       var characterTabTester = CharacterTabTester(tester);

@@ -1,5 +1,5 @@
 import 'package:carambar/career_utils.dart';
-import 'package:carambar/domain/work.dart';
+import 'package:carambar/domain/work/job.dart';
 import 'package:carambar/main.dart' as app;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -79,7 +79,7 @@ void main() {
     await workTabTester.goTo();
     expect(workTabTester.isVisible, true);
 
-    await workTabTester.startJob(careerJobToString[CareerJob.Dishwasher]);
+    await workTabTester.startJob(careerJobToString(Dishwasher()));
 
     await characterTabTester.goTo();
     expect(characterTabTester.isVisible, true);

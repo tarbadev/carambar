@@ -1,5 +1,6 @@
-import 'package:carambar/domain/work.dart';
 import 'package:equatable/equatable.dart';
+
+import 'work/job.dart';
 
 abstract class LifeEvent {}
 
@@ -14,12 +15,12 @@ class InitiateEvent extends Equatable implements LifeEvent {
 }
 
 class NewJob extends Equatable implements LifeEvent {
-  final CareerJob careerJob;
+  final Job job;
 
-  NewJob(this.careerJob);
+  NewJob(this.job);
 
   @override
-  List<Object> get props => [careerJob];
+  List<Object> get props => [job];
 }
 
 class KickedOutFromParents extends Equatable implements LifeEvent {

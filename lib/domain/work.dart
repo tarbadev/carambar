@@ -1,7 +1,7 @@
+import 'package:carambar/domain/work/job.dart';
+
 enum CareerFamily {
   Chef,
 }
 
-enum CareerJob {
-  Dishwasher,
-}
+final allJobs = [Dishwasher()];

@@ -1,10 +1,10 @@
 import 'package:carambar/character_life_provider.dart';
 import 'package:carambar/domain/age_event.dart';
 import 'package:carambar/domain/life_event.dart';
-import 'package:carambar/domain/work.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'domain/character.dart';
+import 'domain/work/job.dart';
 
 final characterProvider = StateNotifierProvider((ref) => CharacterNotifier(ref));
 
@@ -24,9 +24,9 @@ class CharacterNotifier extends StateNotifier<Character> {
     this.ref.read(characterLifeProvider).addAgeEvent(state.age, lifeEvents: lifeEvents);
   }
 
-  void setJob(CareerJob careerJob) {
-    state = state.setCurrentJob(careerJob);
-    this.ref.read(characterLifeProvider).addAgeEvent(state.age, lifeEvents: [NewJob(careerJob)]);
+  void setJob(Job job) {
+    state = state.setCurrentJob(job);
+    this.ref.read(characterLifeProvider).addAgeEvent(state.age, lifeEvents: [NewJob(job)]);
   }
 
   void setCharacterFromAgeEvents(List<AgeEvent> ageEvents) {

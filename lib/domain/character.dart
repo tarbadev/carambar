@@ -1,7 +1,7 @@
 import 'package:carambar/domain/life_event.dart';
 import 'package:equatable/equatable.dart';
 
-import 'work.dart';
+import 'work/job.dart';
 
 enum Housing {
   LivingWithParents,
@@ -12,7 +12,7 @@ class Character extends Equatable {
   final String firstName;
   final String lastName;
   final int age;
-  final CareerJob currentJob;
+  final Job currentJob;
   final Housing currentHousing;
 
   const Character(this.firstName, this.lastName, this.age, this.currentJob, this.currentHousing);
@@ -26,13 +26,13 @@ class Character extends Equatable {
     return copy(age: newAge, currentHousing: housing);
   }
 
-  Character setCurrentJob(CareerJob careerJob) => copy(currentJob: careerJob);
+  Character setCurrentJob(Job careerJob) => copy(currentJob: careerJob);
 
   Character copy({
     String firstName,
     String lastName,
     int age,
-    CareerJob currentJob,
+    Job currentJob,
     Housing currentHousing,
   }) =>
       Character(

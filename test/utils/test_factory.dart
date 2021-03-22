@@ -1,5 +1,5 @@
-import 'package:carambar/domain/work.dart';
 import 'package:carambar/domain/character.dart';
+import 'package:carambar/domain/work/job.dart';
 
 class TestFactory {
   TestFactory._();
@@ -8,7 +8,7 @@ class TestFactory {
     String firstName = 'John',
     String lastName = 'Doe',
     int age = 35,
-    CareerJob currentJob,
+    Job currentJob,
     Housing currentHousing = Housing.LivingWithParents,
   }) =>
       Character(firstName, lastName, age, currentJob, currentHousing);

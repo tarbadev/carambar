@@ -1,7 +1,7 @@
 import 'package:carambar/domain/age_event.dart';
 import 'package:carambar/domain/character_life.dart';
 import 'package:carambar/domain/life_event.dart';
-import 'package:carambar/domain/work.dart';
+import 'package:carambar/domain/work/job.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -20,8 +20,8 @@ void main() {
         test('When there is an existing ageAgent for this age', () {
           final firstEvent = AgeEvent(23, [NewJob(null)]);
           final ageEvent = AgeEvent(24, [NewJob(null)]);
-          final secondAgeEvent = AgeEvent(24, [NewJob(CareerJob.Dishwasher)]);
-          final expectedAgeEvent = AgeEvent(24, [NewJob(null), NewJob(CareerJob.Dishwasher)]);
+          final secondAgeEvent = AgeEvent(24, [NewJob(Dishwasher())]);
+          final expectedAgeEvent = AgeEvent(24, [NewJob(null), NewJob(Dishwasher())]);
           final characterLife = CharacterLife([firstEvent, firstEvent, ageEvent]);
           final expectedCharacterLife = CharacterLife([firstEvent, firstEvent, expectedAgeEvent]);
 

@@ -1,6 +1,6 @@
-import 'package:carambar/domain/work.dart';
 import 'package:carambar/career_utils.dart';
 import 'package:carambar/character_provider.dart';
+import 'package:carambar/domain/work/job.dart';
 import 'package:carambar/work_tab.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -20,15 +20,15 @@ void main() {
       ));
 
       var workTabTester = WorkTabTester(tester);
-      expect(workTabTester.isJobEnabled(careerJobToString[CareerJob.Dishwasher]), true);
+      expect(workTabTester.isJobEnabled(careerJobToString(Dishwasher())), true);
 
-      await workTabTester.startJob(careerJobToString[CareerJob.Dishwasher]);
+      await workTabTester.startJob(careerJobToString(Dishwasher()));
 
-      verify(Mocks.mockCharacterNotifier.setJob(CareerJob.Dishwasher));
+      verify(Mocks.mockCharacterNotifier.setJob(Dishwasher()));
     });
 
     testWidgets('Current Job is disabled', (WidgetTester tester) async {
-      final character = TestFactory.character(currentJob: CareerJob.Dishwasher);
+      final character = TestFactory.character(currentJob: Dishwasher());
 
       await tester.pumpWidget(buildTestableWidget(
         WorkTab(),
@@ -38,7 +38,7 @@ void main() {
       ));
 
       var workTabTester = WorkTabTester(tester);
-      expect(workTabTester.isJobEnabled(careerJobToString[CareerJob.Dishwasher]), false);
+      expect(workTabTester.isJobEnabled(careerJobToString(Dishwasher())), false);
     });
   });
 }

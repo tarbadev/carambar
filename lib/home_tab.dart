@@ -100,8 +100,8 @@ String _lifeEventToString(LifeEvent lifeEvent) {
           .reduce((line1, line2) => line2.isNotEmpty ? '$line1\n$line2' : line1);
       break;
     case NewJob:
-      final newJobName = (lifeEvent as NewJob).careerJob;
-      return 'You just started a new job as ${careerJobToString[newJobName]}';
+      final newJobName = (lifeEvent as NewJob).job;
+      return 'You just started a new job as ${careerJobToString(newJobName)}';
       break;
     case KickedOutFromParents:
       return 'You got kicked out of the house by your parents! You\'re now homeless';
