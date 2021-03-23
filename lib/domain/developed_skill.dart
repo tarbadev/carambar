@@ -1,4 +1,4 @@
-import 'skill.dart';
+import 'skill_type.dart';
 
 enum LearningLevel {
   Slow,
@@ -6,7 +6,7 @@ enum LearningLevel {
 }
 
 class DevelopedSkill {
-  final Skill skill;
+  final SkillType skill;
   final LearningLevel learningLevel;
 
   DevelopedSkill(this.skill, this.learningLevel);

@@ -4,14 +4,14 @@ import 'package:carambar/domain/developed_skill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'domain/required_skill.dart';
 import 'domain/skill.dart';
+import 'domain/skill_type.dart';
 import 'domain/work/job.dart';
 
-const Map<Skill, String> skillToString = {
-  Skill.Organization: 'Organization',
-  Skill.Cooking: 'Cooking',
-  Skill.Communication: 'Communication',
+const Map<SkillType, String> skillToString = {
+  SkillType.Organization: 'Organization',
+  SkillType.Cooking: 'Cooking',
+  SkillType.Communication: 'Communication',
 };
 
 const Map<LearningLevel, String> learningLevelToString = {
@@ -19,7 +19,7 @@ const Map<LearningLevel, String> learningLevelToString = {
   LearningLevel.Medium: '++',
 };
 
-String displayRequiredSkill(RequiredSkill requiredSkill) {
+String displayRequiredSkill(Skill requiredSkill) {
   final skillString = skillToString[requiredSkill.skill];
 
   if (skillString == null) {
@@ -119,7 +119,7 @@ class WorkTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, watch) {
-    final currentJob = watch(characterProvider.state)?.currentJob;
+    final character = watch(characterProvider.state);
 
     return Container(
       key: Key('Work'),
@@ -130,12 +130,14 @@ class WorkTab extends ConsumerWidget {
         itemBuilder: (BuildContext context, int index) {
           final job = jobs[index];
           final jobName = jobInstanceToJobName(jobs[index]);
+          final jobEnabled =
+              job.areRequiredSkillsMet(character.skills) && character.currentJob != job;
 
           return ListTile(
             key: Key('Work__Job__$jobName'),
             title: Text(jobName),
             onTap: () => _showJobDialog(context, job),
-            enabled: currentJob != job,
+            enabled: jobEnabled,
           );
         },
       ),

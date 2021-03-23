@@ -1,4 +1,5 @@
 import 'package:carambar/domain/life_event.dart';
+import 'package:carambar/domain/skill.dart';
 import 'package:equatable/equatable.dart';
 
 import 'work/job.dart';
@@ -14,8 +15,16 @@ class Character extends Equatable {
   final int age;
   final Job currentJob;
   final Housing currentHousing;
+  final List<Skill> skills;
 
-  const Character(this.firstName, this.lastName, this.age, this.currentJob, this.currentHousing);
+  const Character(
+    this.firstName,
+    this.lastName,
+    this.age,
+    this.currentJob,
+    this.currentHousing,
+    this.skills,
+  );
 
   Character incrementAge() {
     final newAge = this.age + 1;
@@ -34,6 +43,7 @@ class Character extends Equatable {
     int age,
     Job currentJob,
     Housing currentHousing,
+    List<Skill> skills,
   }) =>
       Character(
         firstName ?? this.firstName,
@@ -41,6 +51,7 @@ class Character extends Equatable {
         age ?? this.age,
         currentJob ?? this.currentJob,
         currentHousing ?? this.currentHousing,
+        skills ?? this.skills,
       );
 
   @override
@@ -53,6 +64,7 @@ class Character extends Equatable {
       18,
       null,
       Housing.LivingWithParents,
+      [],
     );
   }
 }

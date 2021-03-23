@@ -1,5 +1,7 @@
 import 'package:carambar/career_utils.dart';
 import 'package:carambar/character_provider.dart';
+import 'package:carambar/domain/skill.dart';
+import 'package:carambar/domain/skill_type.dart';
 import 'package:carambar/domain/work/job.dart';
 import 'package:carambar/work_tab.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,9 +16,11 @@ import 'utils/testable_widget.dart';
 void main() {
   group('WorkTab', () {
     testWidgets('Calls setJob when taping on a Job', (WidgetTester tester) async {
+      final character = TestFactory.character(skills: [Skill(SkillType.Organization, 2)]);
+
       await tester.pumpWidget(buildTestableWidget(
         WorkTab(),
-        providerOverrides: [characterProvider.overrideWithValue(Mocks.mockCharacterNotifier)],
+        providerOverrides: [characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))],
       ));
 
       var workTabTester = WorkTabTester(tester);
@@ -36,6 +40,19 @@ void main() {
       await workTabTester.jobDialog.applyForJob();
 
       verify(Mocks.mockCharacterNotifier.setJob(AllJobs.juniorCook));
+    });
+
+    testWidgets('Disables jobs when the required skills are not met', (WidgetTester tester) async {
+      final character = TestFactory.character(skills: []);
+
+      await tester.pumpWidget(buildTestableWidget(
+        WorkTab(),
+        providerOverrides: [characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))],
+      ));
+
+      var workTabTester = WorkTabTester(tester);
+      expect(workTabTester.isJobEnabled(jobInstanceToJobName(AllJobs.dishwasher)), true);
+      expect(workTabTester.isJobEnabled(jobInstanceToJobName(AllJobs.juniorCook)), false);
     });
 
     testWidgets('Current Job is disabled', (WidgetTester tester) async {
