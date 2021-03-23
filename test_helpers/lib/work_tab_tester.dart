@@ -34,4 +34,16 @@ class _JobDialogElement extends BaseViewTester {
     await tapOnButtonByKey('JobDialog__ApplyButton');
     await tester.pump();
   }
+
+  List<String> get developedSkills {
+    List<String> developedSkills = [];
+    try {
+      var index = 0;
+      do {
+        developedSkills.add(getTextByKey('JobDialog__RequiredSkill__${index++}'));
+      } while (true);
+    } catch (_) {}
+
+    return developedSkills;
+  }
 }

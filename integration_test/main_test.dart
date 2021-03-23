@@ -81,6 +81,7 @@ void main() {
 
     await workTabTester.displayJobDialog(jobInstanceToJobName(AllJobs.dishwasher));
     expect(workTabTester.jobDialog.isVisible, true);
+    expect(workTabTester.jobDialog.developedSkills, ['Organization+']);
 
     await workTabTester.jobDialog.applyForJob();
 
