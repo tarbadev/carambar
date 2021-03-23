@@ -32,13 +32,13 @@ void main() {
         age: 25,
         currentJob: null,
       );
-      var expectedCharacter = character.copy(currentJob: Dishwasher());
+      var expectedCharacter = character.copy(currentJob: AllJobs.dishwasher);
       var characterNotifier = CharacterNotifier(Mocks.mockProviderReference);
       characterNotifier.state = character; // ignore: invalid_use_of_protected_member
 
       expect(characterNotifier.state, character); // ignore: invalid_use_of_protected_member
 
-      characterNotifier.setJob(Dishwasher());
+      characterNotifier.setJob(AllJobs.dishwasher);
 
       // ignore: invalid_use_of_protected_member
       expect(characterNotifier.state, expectedCharacter);
@@ -69,10 +69,10 @@ void main() {
       var characterNotifier = CharacterNotifier(Mocks.mockProviderReference);
       characterNotifier.state = character; // ignore: invalid_use_of_protected_member
 
-      characterNotifier.setJob(Dishwasher());
+      characterNotifier.setJob(AllJobs.dishwasher);
 
       verify(Mocks.mockCharacterLifeNotifier
-          .addAgeEvent(character.age, lifeEvents: [NewJob(Dishwasher())]));
+          .addAgeEvent(character.age, lifeEvents: [NewJob(AllJobs.dishwasher)]));
     });
   });
 }

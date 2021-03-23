@@ -64,7 +64,7 @@ void main() {
     expect(homeTabTester.header.title, 'Jane Doe, 18');
   });
 
-  testWidgets("Starts a job in Chef career path", (WidgetTester tester) async {
+  testWidgets("Starts a job as Dishwasher", (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();
 
@@ -79,7 +79,10 @@ void main() {
     await workTabTester.goTo();
     expect(workTabTester.isVisible, true);
 
-    await workTabTester.startJob(careerJobToString(Dishwasher()));
+    await workTabTester.displayJobDialog(jobInstanceToJobName(AllJobs.dishwasher));
+    expect(workTabTester.jobDialog.isVisible, true);
+
+    await workTabTester.jobDialog.applyForJob();
 
     await characterTabTester.goTo();
     expect(characterTabTester.isVisible, true);

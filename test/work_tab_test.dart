@@ -20,15 +20,18 @@ void main() {
       ));
 
       var workTabTester = WorkTabTester(tester);
-      expect(workTabTester.isJobEnabled(careerJobToString(Dishwasher())), true);
+      expect(workTabTester.isJobEnabled(jobInstanceToJobName(AllJobs.dishwasher)), true);
 
-      await workTabTester.startJob(careerJobToString(Dishwasher()));
+      await workTabTester.displayJobDialog(jobInstanceToJobName(AllJobs.dishwasher));
+      expect(workTabTester.jobDialog.isVisible, true);
 
-      verify(Mocks.mockCharacterNotifier.setJob(Dishwasher()));
+      await workTabTester.jobDialog.applyForJob();
+
+      verify(Mocks.mockCharacterNotifier.setJob(AllJobs.dishwasher));
     });
 
     testWidgets('Current Job is disabled', (WidgetTester tester) async {
-      final character = TestFactory.character(currentJob: Dishwasher());
+      final character = TestFactory.character(currentJob: AllJobs.dishwasher);
 
       await tester.pumpWidget(buildTestableWidget(
         WorkTab(),
@@ -38,7 +41,7 @@ void main() {
       ));
 
       var workTabTester = WorkTabTester(tester);
-      expect(workTabTester.isJobEnabled(careerJobToString(Dishwasher())), false);
+      expect(workTabTester.isJobEnabled(jobInstanceToJobName(AllJobs.dishwasher)), false);
     });
   });
 }

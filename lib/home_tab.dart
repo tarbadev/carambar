@@ -101,7 +101,7 @@ String _lifeEventToString(LifeEvent lifeEvent) {
       break;
     case NewJob:
       final newJobName = (lifeEvent as NewJob).job;
-      return 'You just started a new job as ${careerJobToString(newJobName)}';
+      return 'You just started a new job as ${jobInstanceToJobName(newJobName)}';
       break;
     case KickedOutFromParents:
       return 'You got kicked out of the house by your parents! You\'re now homeless';

@@ -20,8 +20,8 @@ void main() {
         test('When there is an existing ageAgent for this age', () {
           final firstEvent = AgeEvent(23, [NewJob(null)]);
           final ageEvent = AgeEvent(24, [NewJob(null)]);
-          final secondAgeEvent = AgeEvent(24, [NewJob(Dishwasher())]);
-          final expectedAgeEvent = AgeEvent(24, [NewJob(null), NewJob(Dishwasher())]);
+          final secondAgeEvent = AgeEvent(24, [NewJob(AllJobs.dishwasher)]);
+          final expectedAgeEvent = AgeEvent(24, [NewJob(null), NewJob(AllJobs.dishwasher)]);
           final characterLife = CharacterLife([firstEvent, firstEvent, ageEvent]);
           final expectedCharacterLife = CharacterLife([firstEvent, firstEvent, expectedAgeEvent]);
 

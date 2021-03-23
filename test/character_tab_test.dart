@@ -26,7 +26,7 @@ void main() {
     });
 
     testWidgets('Displays the current job', (WidgetTester tester) async {
-      final character = TestFactory.character(currentJob: Dishwasher());
+      final character = TestFactory.character(currentJob: AllJobs.dishwasher);
 
       await tester.pumpWidget(buildTestableWidget(
         CharacterTab(),
