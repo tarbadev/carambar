@@ -5,7 +5,7 @@ import 'package:carambar/domain/work/job.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('Character', () {
+  group('CharacterLife', () {
     group('addAgeEvent', () {
       group('When ageEvents is not empty', () {
         test('When no existing ageAgent for this age', () {
