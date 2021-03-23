@@ -20,15 +20,22 @@ void main() {
       ));
 
       var workTabTester = WorkTabTester(tester);
-      expect(workTabTester.isJobEnabled(jobInstanceToJobName(AllJobs.dishwasher)), true);
+      expect(workTabTester.isJobEnabled(jobInstanceToJobName(AllJobs.juniorCook)), true);
 
-      await workTabTester.displayJobDialog(jobInstanceToJobName(AllJobs.dishwasher));
+      await workTabTester.displayJobDialog(jobInstanceToJobName(AllJobs.juniorCook));
       expect(workTabTester.jobDialog.isVisible, true);
-      expect(workTabTester.jobDialog.developedSkills, ['Organization+']);
+      expect(
+        workTabTester.jobDialog.developedSkills,
+        ['Organization++', 'Cooking++', 'Communication+'],
+      );
+      expect(
+        workTabTester.jobDialog.requiredSkills,
+        ['Organization(2)'],
+      );
 
       await workTabTester.jobDialog.applyForJob();
 
-      verify(Mocks.mockCharacterNotifier.setJob(AllJobs.dishwasher));
+      verify(Mocks.mockCharacterNotifier.setJob(AllJobs.juniorCook));
     });
 
     testWidgets('Current Job is disabled', (WidgetTester tester) async {

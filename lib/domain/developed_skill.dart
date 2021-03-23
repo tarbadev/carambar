@@ -2,6 +2,7 @@ import 'skill.dart';
 
 enum LearningLevel {
   Slow,
+  Medium,
 }
 
 class DevelopedSkill {

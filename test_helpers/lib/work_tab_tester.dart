@@ -35,12 +35,24 @@ class _JobDialogElement extends BaseViewTester {
     await tester.pump();
   }
 
+  List<String> get requiredSkills {
+    List<String> requiredSkills = [];
+    try {
+      var index = 0;
+      do {
+        requiredSkills.add(getTextByKey('JobDialog__RequiredSkill__${index++}'));
+      } while (true);
+    } catch (_) {}
+
+    return requiredSkills;
+  }
+
   List<String> get developedSkills {
     List<String> developedSkills = [];
     try {
       var index = 0;
       do {
-        developedSkills.add(getTextByKey('JobDialog__RequiredSkill__${index++}'));
+        developedSkills.add(getTextByKey('JobDialog__DevelopedSkill__${index++}'));
       } while (true);
     } catch (_) {}
 

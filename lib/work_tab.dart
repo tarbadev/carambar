@@ -4,16 +4,32 @@ import 'package:carambar/domain/developed_skill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'domain/required_skill.dart';
 import 'domain/skill.dart';
 import 'domain/work/job.dart';
 
 const Map<Skill, String> skillToString = {
   Skill.Organization: 'Organization',
+  Skill.Cooking: 'Cooking',
+  Skill.Communication: 'Communication',
 };
 
 const Map<LearningLevel, String> learningLevelToString = {
   LearningLevel.Slow: '+',
+  LearningLevel.Medium: '++',
 };
+
+String displayRequiredSkill(RequiredSkill requiredSkill) {
+  final skillString = skillToString[requiredSkill.skill];
+
+  if (skillString == null) {
+    throw Exception(
+      'RequiredSkill not mapped to string: skillString = $skillString',
+    );
+  }
+
+  return '$skillString(${requiredSkill.level})';
+}
 
 String displayDevelopedSkill(DevelopedSkill developedSkill) {
   final skillString = skillToString[developedSkill.skill];
@@ -38,22 +54,47 @@ class WorkTab extends ConsumerWidget {
                 key: Key('JobDialog'),
                 title: Text(jobInstanceToJobName(job)),
                 content: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
+                    if (job.requiredSkills.length > 0)
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Required Skills: '),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: job.requiredSkills
+                                  .asMap()
+                                  .entries
+                                  .map((entry) => Text(
+                                        displayRequiredSkill(entry.value),
+                                        textAlign: TextAlign.start,
+                                        key: Key('JobDialog__RequiredSkill__${entry.key}'),
+                                      ))
+                                  .toList(),
+                            )
+                          ]),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Developed Skills: '),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: job.developedSkills
                               .asMap()
                               .entries
                               .map((entry) => Text(
                                     displayDevelopedSkill(entry.value),
-                                    key: Key('JobDialog__RequiredSkill__${entry.key}'),
+                                    key: Key('JobDialog__DevelopedSkill__${entry.key}'),
                                   ))
                               .toList(),
                         )
                       ],
-                    )
+                    ),
                   ],
                 ),
                 actions: <Widget>[
