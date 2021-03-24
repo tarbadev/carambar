@@ -18,7 +18,7 @@ String displayDevelopedSkill(DevelopedSkill developedSkill) {
 
   if (skillString == null || levelString == null) {
     throw Exception(
-      'DevelopedSkill not mapped to string: skillString = $skillString, levelString = $levelString',
+      'DevelopedSkill not mapped to string: skillString = $skillString (${developedSkill.skill}), levelString = $levelString (${developedSkill.learningLevel})',
     );
   }
 

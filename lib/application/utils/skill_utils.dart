@@ -5,6 +5,7 @@ const Map<SkillType, String> skillToString = {
   SkillType.Organization: 'Organization',
   SkillType.Cooking: 'Cooking',
   SkillType.Communication: 'Communication',
+  SkillType.Management: 'Management',
 };
 
 String displaySkill(Skill skill) {
