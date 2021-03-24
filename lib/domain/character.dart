@@ -1,7 +1,9 @@
 import 'package:carambar/domain/life_event.dart';
+import 'package:carambar/domain/need_type.dart';
 import 'package:carambar/domain/skill.dart';
 import 'package:equatable/equatable.dart';
 
+import 'need.dart';
 import 'work/job.dart';
 
 enum Housing {
@@ -16,6 +18,7 @@ class Character extends Equatable {
   final Job currentJob;
   final Housing currentHousing;
   final List<Skill> skills;
+  final List<Need> needs;
 
   const Character(
     this.firstName,
@@ -24,6 +27,7 @@ class Character extends Equatable {
     this.currentJob,
     this.currentHousing,
     this.skills,
+    this.needs,
   );
 
   Character incrementAge() {
@@ -59,6 +63,7 @@ class Character extends Equatable {
     Job currentJob,
     Housing currentHousing,
     List<Skill> skills,
+    List<Need> needs,
   }) =>
       Character(
         firstName ?? this.firstName,
@@ -67,10 +72,11 @@ class Character extends Equatable {
         currentJob ?? this.currentJob,
         currentHousing ?? this.currentHousing,
         skills ?? this.skills,
+        needs ?? this.needs,
       );
 
   @override
-  List<Object> get props => [firstName, lastName, age, currentJob, currentHousing, skills];
+  List<Object> get props => [firstName, lastName, age, currentJob, currentHousing, skills, needs];
 
   factory Character.fromInitiateEvent(InitiateEvent initiateEvent) {
     return Character(
@@ -80,6 +86,12 @@ class Character extends Equatable {
       null,
       Housing.LivingWithParents,
       [],
+      [
+        Need(NeedType.Hunger, 100),
+        Need(NeedType.Hygiene, 100),
+        Need(NeedType.Health, 100),
+        Need(NeedType.Happiness, 100),
+      ],
     );
   }
 }

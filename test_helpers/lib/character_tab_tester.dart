@@ -21,6 +21,18 @@ class CharacterTabTester extends BaseViewTester {
     return skills;
   }
 
+  List<String> get needs {
+    List<String> needs = [];
+    try {
+      var index = 0;
+      do {
+        needs.add(getTextByKey('Character__Need__${index++}'));
+      } while (true);
+    } catch (_) {}
+
+    return needs;
+  }
+
   Future<void> goTo() async {
     await tapOnTextWidgetByTextContent('Character');
     await tester.pump();

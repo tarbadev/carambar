@@ -1,4 +1,5 @@
 import 'package:carambar/domain/character.dart';
+import 'package:carambar/domain/need.dart';
 import 'package:carambar/domain/skill.dart';
 import 'package:carambar/domain/work/job.dart';
 
@@ -12,6 +13,7 @@ class TestFactory {
     Job currentJob,
     Housing currentHousing = Housing.LivingWithParents,
     List<Skill> skills = const [],
+    List<Need> needs = const [],
   }) =>
-      Character(firstName, lastName, age, currentJob, currentHousing, skills);
+      Character(firstName, lastName, age, currentJob, currentHousing, skills, needs);
 }

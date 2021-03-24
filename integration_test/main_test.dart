@@ -122,6 +122,22 @@ void main() {
     expect(characterTabTester.skills, ['Organization(1, 14.60%)']);
   });
 
+  testWidgets("Displays the character needs", (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    final characterTabTester = CharacterTabTester(tester);
+
+    await characterTabTester.goTo();
+    expect(characterTabTester.isVisible, true);
+    expect(characterTabTester.needs, [
+      'Hunger(100%)',
+      'Hygiene(100%)',
+      'Health(100%)',
+      'Happiness(100%)',
+    ]);
+  });
+
   testWidgets("Is kicked out of the house at 25", (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle();

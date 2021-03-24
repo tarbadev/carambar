@@ -3,6 +3,7 @@ import 'package:carambar/application/utils/housing_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'application/utils/need_utils.dart';
 import 'application/utils/skill_utils.dart';
 import 'application/utils/career_utils.dart';
 
@@ -40,6 +41,20 @@ class CharacterTab extends ConsumerWidget {
                 .map((entry) => Text(
                       displaySkill(entry.value),
                       key: Key('Character__Skill__${entry.key}'),
+                    ))
+                .toList(),
+          ),
+        ),
+        _LabelAndValue(
+          'Needs',
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: character.needs
+                .asMap()
+                .entries
+                .map((entry) => Text(
+                      displayNeed(entry.value),
+                      key: Key('Character__Need__${entry.key}'),
                     ))
                 .toList(),
           ),

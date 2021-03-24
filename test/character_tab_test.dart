@@ -1,6 +1,8 @@
 import 'package:carambar/character_provider.dart';
 import 'package:carambar/character_tab.dart';
 import 'package:carambar/domain/character.dart';
+import 'package:carambar/domain/need.dart';
+import 'package:carambar/domain/need_type.dart';
 import 'package:carambar/domain/skill.dart';
 import 'package:carambar/domain/skill_type.dart';
 import 'package:carambar/domain/work/job.dart';
@@ -70,6 +72,23 @@ void main() {
 
       var characterTabTester = CharacterTabTester(tester);
       expect(characterTabTester.skills, ['Communication(5, 21.23%)', 'Cooking(2)']);
+    });
+
+    testWidgets('Displays the needs', (WidgetTester tester) async {
+      final character = TestFactory.character(needs: [
+        Need(NeedType.Hunger, 95),
+        Need(NeedType.Health, 45),
+      ]);
+
+      await tester.pumpWidget(buildTestableWidget(
+        CharacterTab(),
+        providerOverrides: [
+          characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))
+        ],
+      ));
+
+      var characterTabTester = CharacterTabTester(tester);
+      expect(characterTabTester.needs, ['Hunger(95%)', 'Health(45%)']);
     });
   });
 }
