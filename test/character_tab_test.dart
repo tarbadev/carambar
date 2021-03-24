@@ -1,6 +1,8 @@
 import 'package:carambar/character_provider.dart';
 import 'package:carambar/character_tab.dart';
 import 'package:carambar/domain/character.dart';
+import 'package:carambar/domain/skill.dart';
+import 'package:carambar/domain/skill_type.dart';
 import 'package:carambar/domain/work/job.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:test_helpers/character_tab_tester.dart';
@@ -51,6 +53,23 @@ void main() {
 
       var characterTabTester = CharacterTabTester(tester);
       expect(characterTabTester.currentHousing, 'Living with parents');
+    });
+
+    testWidgets('Displays the skills', (WidgetTester tester) async {
+      final character = TestFactory.character(skills: [
+        Skill(SkillType.Communication, 5, 21.23456789),
+        Skill(SkillType.Cooking, 2),
+      ]);
+
+      await tester.pumpWidget(buildTestableWidget(
+        CharacterTab(),
+        providerOverrides: [
+          characterProvider.overrideWithValue(FakeCharacterNotifier(character: character))
+        ],
+      ));
+
+      var characterTabTester = CharacterTabTester(tester);
+      expect(characterTabTester.skills, ['Communication(5, 21.23%)', 'Cooking(2)']);
     });
   });
 }

@@ -1,4 +1,4 @@
-import 'package:carambar/career_utils.dart';
+import 'package:carambar/application/utils/career_utils.dart';
 import 'package:carambar/domain/work/job.dart';
 import 'package:carambar/main.dart' as app;
 import 'package:flutter_test/flutter_test.dart';
@@ -94,6 +94,32 @@ void main() {
     expect(lifeEvent.isVisible, true);
     expect(lifeEvent.title, 'Age 18');
     expect(lifeEvent.events.last, 'You just started a new job as Dishwasher');
+  });
+
+  testWidgets("Job increases skills", (WidgetTester tester) async {
+    app.main();
+    await tester.pumpAndSettle();
+
+    final characterTabTester = CharacterTabTester(tester);
+    final workTabTester = WorkTabTester(tester);
+    final homeTabTester = HomeTabTester(tester);
+
+    await workTabTester.goTo();
+    await workTabTester.displayJobDialog(jobInstanceToJobName(AllJobs.dishwasher));
+    await workTabTester.jobDialog.applyForJob();
+
+    await characterTabTester.goTo();
+    expect(characterTabTester.isVisible, true);
+    expect(characterTabTester.currentCareer, 'Dishwasher');
+    expect(characterTabTester.skills, []);
+
+    await homeTabTester.goTo();
+    await homeTabTester.tapOnPlus1Year();
+
+    await characterTabTester.goTo();
+    expect(characterTabTester.isVisible, true);
+    expect(characterTabTester.currentCareer, 'Dishwasher');
+    expect(characterTabTester.skills, ['Organization(1, 14.60%)']);
   });
 
   testWidgets("Is kicked out of the house at 25", (WidgetTester tester) async {

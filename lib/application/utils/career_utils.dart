@@ -1,5 +1,5 @@
-import 'domain/work.dart';
-import 'domain/work/job.dart';
+import '../../domain/work.dart';
+import '../../domain/work/job.dart';
 
 String jobInstanceToJobName(Job job) {
   switch(job.runtimeType.toString()) {

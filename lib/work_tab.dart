@@ -1,35 +1,16 @@
-import 'package:carambar/career_utils.dart';
+import 'package:carambar/application/utils/career_utils.dart';
 import 'package:carambar/character_provider.dart';
 import 'package:carambar/domain/developed_skill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'domain/skill.dart';
-import 'domain/skill_type.dart';
+import 'application/utils/skill_utils.dart';
 import 'domain/work/job.dart';
-
-const Map<SkillType, String> skillToString = {
-  SkillType.Organization: 'Organization',
-  SkillType.Cooking: 'Cooking',
-  SkillType.Communication: 'Communication',
-};
 
 const Map<LearningLevel, String> learningLevelToString = {
   LearningLevel.Slow: '+',
   LearningLevel.Medium: '++',
 };
-
-String displayRequiredSkill(Skill requiredSkill) {
-  final skillString = skillToString[requiredSkill.skill];
-
-  if (skillString == null) {
-    throw Exception(
-      'RequiredSkill not mapped to string: skillString = $skillString',
-    );
-  }
-
-  return '$skillString(${requiredSkill.level})';
-}
 
 String displayDevelopedSkill(DevelopedSkill developedSkill) {
   final skillString = skillToString[developedSkill.skill];
@@ -69,7 +50,7 @@ class WorkTab extends ConsumerWidget {
                                   .asMap()
                                   .entries
                                   .map((entry) => Text(
-                                        displayRequiredSkill(entry.value),
+                                        displaySkill(entry.value),
                                         textAlign: TextAlign.start,
                                         key: Key('JobDialog__RequiredSkill__${entry.key}'),
                                       ))

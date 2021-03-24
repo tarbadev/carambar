@@ -1,4 +1,4 @@
-import 'package:carambar/career_utils.dart';
+import 'package:carambar/application/utils/career_utils.dart';
 import 'package:carambar/character_provider.dart';
 import 'package:carambar/domain/life_event.dart';
 import 'package:flutter/material.dart';

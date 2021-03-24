@@ -32,7 +32,22 @@ class Character extends Equatable {
         ? Housing.Homeless
         : this.currentHousing;
 
-    return copy(age: newAge, currentHousing: housing);
+    List<Skill> newSkills = List.from(skills);
+    if (currentJob != null) {
+      currentJob.developedSkills.forEach((developedSkill) {
+        int index = newSkills.indexWhere((element) => element.skill == developedSkill.skill);
+        Skill skill = (index >= 0 ? newSkills[index] : Skill(developedSkill.skill))
+            .makeProgress(developedSkill.learningLevel);
+
+        if (index >= 0) {
+          newSkills[index] = skill;
+        } else {
+          newSkills.add(skill);
+        }
+      });
+    }
+
+    return copy(age: newAge, currentHousing: housing, skills: newSkills);
   }
 
   Character setCurrentJob(Job careerJob) => copy(currentJob: careerJob);
@@ -55,7 +70,7 @@ class Character extends Equatable {
       );
 
   @override
-  List<Object> get props => [firstName, lastName, age, currentJob, currentHousing];
+  List<Object> get props => [firstName, lastName, age, currentJob, currentHousing, skills];
 
   factory Character.fromInitiateEvent(InitiateEvent initiateEvent) {
     return Character(

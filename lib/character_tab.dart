@@ -1,9 +1,10 @@
 import 'package:carambar/character_provider.dart';
-import 'package:carambar/housing_utils.dart';
+import 'package:carambar/application/utils/housing_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'career_utils.dart';
+import 'application/utils/skill_utils.dart';
+import 'application/utils/career_utils.dart';
 
 class CharacterTab extends ConsumerWidget {
   CharacterTab({Key key}) : super(key: key);
@@ -17,13 +18,31 @@ class CharacterTab extends ConsumerWidget {
       children: [
         _LabelAndValue(
           'Current Job',
-          jobInstanceToJobName(character.currentJob) ?? 'Unemployed',
-          valueKey: Key('Character__CurrentCareer'),
+          Text(
+            jobInstanceToJobName(character.currentJob) ?? 'Unemployed',
+            key: Key('Character__CurrentCareer'),
+          ),
         ),
         _LabelAndValue(
           'Current Housing',
-          housingToString[character.currentHousing],
-          valueKey: Key('Character__CurrentHousing'),
+          Text(
+            housingToString[character.currentHousing],
+            key: Key('Character__CurrentHousing'),
+          ),
+        ),
+        _LabelAndValue(
+          'Skills',
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: character.skills
+                .asMap()
+                .entries
+                .map((entry) => Text(
+                      displaySkill(entry.value),
+                      key: Key('Character__Skill__${entry.key}'),
+                    ))
+                .toList(),
+          ),
         ),
       ],
     );
@@ -32,20 +51,17 @@ class CharacterTab extends ConsumerWidget {
 
 class _LabelAndValue extends StatelessWidget {
   final String label;
-  final String value;
-  final Key valueKey;
+  final Widget value;
 
-  const _LabelAndValue(this.label, this.value, {Key key, this.valueKey}) : super(key: key);
+  const _LabelAndValue(this.label, this.value, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('$label: '),
-        Text(
-          value,
-          key: valueKey,
-        ),
+        value,
       ],
     );
   }
