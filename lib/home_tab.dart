@@ -2,17 +2,24 @@ import 'package:carambar/application/utils/career_utils.dart';
 import 'package:carambar/character_provider.dart';
 import 'package:carambar/domain/life_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'character_life_provider.dart';
 import 'domain/age_event.dart';
 
 class HomeTab extends ConsumerWidget {
+  final _scrollController = ScrollController();
+
   HomeTab({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, watch) {
     final ageEvents = watch(characterLifeProvider.state).ageEvents;
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    });
 
     return Scaffold(
       body: _displayAgeEvents(ageEvents),
@@ -30,6 +37,7 @@ class HomeTab extends ConsumerWidget {
 
   ListView _displayAgeEvents(List<AgeEvent> ageEvents) {
     return ListView.separated(
+      controller: _scrollController,
       padding: EdgeInsets.symmetric(vertical: 10),
       itemCount: ageEvents.length,
       separatorBuilder: (context, index) => Padding(
